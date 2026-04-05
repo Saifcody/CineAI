@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-const BASE_URL = process.env.REACT_APP_API_URL || "http://127.0.0.1:8001";
+const BASE_URL = "https://cineai-backend-08x8.onrender.com";
 
 function App() {
   const [query, setQuery] = useState("");
