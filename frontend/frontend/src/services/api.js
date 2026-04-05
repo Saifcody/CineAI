@@ -1,4 +1,4 @@
-const BASE_URL = process.env.REACT_APP_API_URL || "http://127.0.0.1:8001";
+const BASE_URL = process.env.REACT_APP_API_URL || "https://cineai-backend-08x8.onrender.com";
 
 export async function fetchMovies(query, page = 1) {
   const res = await fetch(
