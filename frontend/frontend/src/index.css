@@ -1,3 +1,6 @@
+/* ============================================================
+   BASE RESET
+   ============================================================ */
 body {
   margin: 0;
   font-family: "Inter", sans-serif;
@@ -22,12 +25,9 @@ body::before {
   background-position: 0 0, 11px 11px;
 }
 
-body > :not(#root) {
-  display: none !important;
-}
-
 * {
   box-sizing: border-box;
+  -webkit-tap-highlight-color: transparent;
 }
 
 button,
@@ -45,6 +45,9 @@ button {
   z-index: 1;
 }
 
+/* ============================================================
+   MATERIAL ICONS
+   ============================================================ */
 .material-symbols-outlined {
   font-family: "Material Symbols Outlined";
   font-weight: normal;
@@ -57,6 +60,9 @@ button {
   font-variation-settings: "FILL" 0, "wght" 400, "GRAD" 0, "opsz" 24;
 }
 
+/* ============================================================
+   SHELL + BLUR OVERLAY
+   ============================================================ */
 .cineai-editorialShell {
   min-height: 100vh;
   transition: filter 0.3s ease, transform 0.3s ease;
@@ -65,13 +71,18 @@ button {
 .cineai-editorialShell.is-blurred {
   filter: blur(2px);
   transform: scale(0.995);
+  pointer-events: none;
 }
 
+/* ============================================================
+   TOPBAR
+   ============================================================ */
 .cineai-topbar {
   position: sticky;
   top: 0;
   z-index: 40;
   backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
   background: rgba(10, 10, 10, 0.68);
   box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
 }
@@ -79,13 +90,16 @@ button {
 .cineai-topbarInner {
   max-width: 1440px;
   margin: 0 auto;
-  padding: 20px 32px;
+  padding: 16px 32px;
   display: flex;
   align-items: center;
   justify-content: flex-start;
   gap: 20px;
 }
 
+/* ============================================================
+   FONT FAMILIES
+   ============================================================ */
 .cineai-brand,
 .cineai-heroTitle,
 .cineai-sectionTitle,
@@ -93,10 +107,15 @@ button {
 .cineai-sidebarTitle,
 .cineai-loadMoreButton,
 .cineai-searchButton,
-.cineai-chip {
+.cineai-chip,
+.cineai-sortButton,
+.cineai-paginationButton {
   font-family: "Manrope", sans-serif;
 }
 
+/* ============================================================
+   BRAND
+   ============================================================ */
 .cineai-brand {
   font-size: 1.6rem;
   font-weight: 800;
@@ -105,27 +124,33 @@ button {
   text-transform: uppercase;
 }
 
+/* ============================================================
+   PAGE
+   ============================================================ */
 .cineai-editorialPage {
   max-width: 1440px;
   margin: 0 auto;
   padding: 0 32px 48px;
 }
 
+/* ============================================================
+   HERO
+   ============================================================ */
 .cineai-hero {
-  min-height: 420px;
+  min-height: 360px;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   text-align: center;
-  padding: 84px 0 44px;
+  padding: 72px 0 44px;
   background: radial-gradient(circle at center, rgba(233, 193, 120, 0.08) 0%, rgba(19, 19, 21, 0) 70%);
 }
 
 .cineai-heroTitle {
   margin: 0 0 32px;
   max-width: 900px;
-  font-size: clamp(3rem, 8vw, 5.5rem);
+  font-size: clamp(2.4rem, 8vw, 5.5rem);
   line-height: 0.95;
   font-weight: 800;
   letter-spacing: -0.07em;
@@ -136,9 +161,12 @@ button {
   font-style: italic;
 }
 
+/* ============================================================
+   SEARCH
+   ============================================================ */
 .cineai-searchShell {
   width: 100%;
-  max-width: 900px;
+  max-width: 700px;
   position: relative;
 }
 
@@ -162,11 +190,13 @@ button {
   border: 1px solid rgba(255, 255, 255, 0.05);
   background: rgba(53, 52, 55, 0.6);
   backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
 }
 
 .cineai-searchIcon {
   margin-left: 14px;
   color: #9a8f80;
+  flex-shrink: 0;
 }
 
 .cineai-searchInput {
@@ -185,20 +215,71 @@ button {
 }
 
 .cineai-searchButton {
-  padding: 16px 28px;
+  flex-shrink: 0;
+  min-width: 100px;
+  min-height: 48px;
+  padding: 14px 28px;
   border-radius: 18px;
   background: #e9c178;
   color: #412d00;
   font-weight: 800;
   cursor: pointer;
   transition: transform 0.3s ease, opacity 0.3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
 }
 
+/* ============================================================
+   LOADING SPINNER (inside search button)
+   ============================================================ */
+.cineai-spinner {
+  width: 18px;
+  height: 18px;
+  border: 2px solid rgba(65, 45, 0, 0.3);
+  border-top-color: #412d00;
+  border-radius: 50%;
+  animation: cineaiSpin 0.7s linear infinite;
+  display: inline-block;
+}
+
+@keyframes cineaiSpin {
+  to { transform: rotate(360deg); }
+}
+
+/* ============================================================
+   SKELETON LOADING STATE
+   ============================================================ */
+.cineai-loadingState {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 28px;
+  margin-bottom: 32px;
+}
+
+.cineai-loadingPulse {
+  aspect-ratio: 2 / 3;
+  border-radius: 24px;
+  background: linear-gradient(90deg, #1e1e20 25%, #2a2a2c 50%, #1e1e20 75%);
+  background-size: 200% 100%;
+  animation: cineaiPulse 1.4s ease infinite;
+}
+
+@keyframes cineaiPulse {
+  0% { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}
+
+/* ============================================================
+   HOVER / DISABLED STATES
+   ============================================================ */
 .cineai-searchButton:hover:not(:disabled),
 .cineai-chip:hover:not(:disabled),
 .cineai-paginationButton:hover:not(:disabled),
 .cineai-loadMoreButton:hover:not(:disabled),
-.cineai-movieCard:hover {
+.cineai-movieCard:hover,
+.cineai-sortButton:hover {
   transform: translateY(-2px);
 }
 
@@ -210,16 +291,22 @@ button {
   cursor: not-allowed;
 }
 
+/* ============================================================
+   EDITORIAL GRID (sidebar + content)
+   ============================================================ */
 .cineai-editorialGrid {
   display: grid;
-  grid-template-columns: 0.75fr 1.9fr;
+  grid-template-columns: 260px 1fr;
   gap: 34px;
   margin-bottom: 32px;
 }
 
+/* ============================================================
+   SIDEBAR
+   ============================================================ */
 .cineai-sidebarPanel {
   position: sticky;
-  top: 104px;
+  top: 80px;
   padding: 32px;
   background: #1b1b1d;
   border-radius: 24px;
@@ -237,15 +324,16 @@ button {
 .cineai-sidebarNav {
   display: flex;
   flex-direction: column;
-  gap: 14px;
+  gap: 10px;
   margin-bottom: 22px;
 }
 
 .cineai-sidebarLink {
   display: flex;
   align-items: center;
-  gap: 14px;
-  padding: 14px 16px;
+  gap: 12px;
+  padding: 12px 16px;
+  min-height: 48px;
   border-radius: 16px;
   background: transparent;
   color: #6e6e72;
@@ -254,6 +342,7 @@ button {
   letter-spacing: 0.15em;
   font-size: 0.68rem;
   font-weight: 700;
+  transition: background 0.2s, color 0.2s;
 }
 
 .cineai-sidebarLink.is-active {
@@ -262,6 +351,9 @@ button {
   border-right: 2px solid #e9c178;
 }
 
+/* ============================================================
+   SORT PANEL
+   ============================================================ */
 .cineai-sortPanel {
   padding-top: 20px;
   border-top: 1px solid rgba(255, 255, 255, 0.05);
@@ -280,32 +372,34 @@ button {
 .cineai-sortControl {
   display: flex;
   align-items: center;
-  gap: 10px;
-  padding: 12px 14px;
+  gap: 8px;
+  padding: 10px 12px;
   border-radius: 16px;
   background: #2a2a2c;
   color: #e9c178;
 }
 
 .cineai-sortOptions {
-  display: flex;
-  gap: 8px;
-  width: 100%;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 6px;
+  flex: 1;
+  min-width: 0;
 }
 
 .cineai-sortButton {
-  flex: 1;
-  padding: 10px 12px;
+  min-height: 44px;
+  min-width: 0;
+  padding: 10px 8px;
   border-radius: 12px;
   background: rgba(255, 255, 255, 0.04);
   color: #d1c5b4;
   cursor: pointer;
-  font-family: "Manrope", sans-serif;
-  font-size: 0.76rem;
+  font-size: 0.72rem;
   font-weight: 800;
-  letter-spacing: 0.08em;
+  letter-spacing: 0.06em;
   text-transform: uppercase;
-  transition: background 0.3s ease, color 0.3s ease, transform 0.3s ease;
+  transition: background 0.3s ease, color 0.3s ease, transform 0.2s ease;
 }
 
 .cineai-sortButton.is-active {
@@ -313,34 +407,36 @@ button {
   color: #412d00;
 }
 
-.cineai-sortButton:hover {
-  transform: translateY(-1px);
-}
-
+/* ============================================================
+   GENRE CHIPS
+   ============================================================ */
 .cineai-genreSection {
   margin-bottom: 28px;
 }
 
 .cineai-sectionTitle {
   margin: 0 0 18px;
-  font-size: 1.7rem;
+  font-size: 1.5rem;
   font-weight: 800;
 }
 
 .cineai-chipGrid {
   display: flex;
   flex-wrap: wrap;
-  gap: 12px;
+  gap: 10px;
 }
 
 .cineai-chip {
-  padding: 14px 22px;
+  padding: 12px 20px;
+  min-height: 44px;
   border-radius: 999px;
   background: #2a2a2c;
   color: #e4e2e4;
   cursor: pointer;
-  font-size: 0.86rem;
-  font-weight: 800;
+  font-size: 0.84rem;
+  font-weight: 700;
+  white-space: nowrap;
+  transition: transform 0.2s ease, background 0.2s ease;
 }
 
 .cineai-chip.is-active {
@@ -348,9 +444,16 @@ button {
   color: #4f3800;
 }
 
+/* ============================================================
+   ALERTS
+   ============================================================ */
 .cineai-error {
   margin: 0 0 18px;
   color: #ffb4ab;
+  padding: 12px 16px;
+  background: rgba(255, 100, 100, 0.08);
+  border-radius: 12px;
+  border: 1px solid rgba(255, 100, 100, 0.15);
 }
 
 .cineai-status {
@@ -358,10 +461,13 @@ button {
   color: #e9c178;
 }
 
+/* ============================================================
+   MOVIE GRID
+   ============================================================ */
 .cineai-movieGrid {
   display: grid;
   grid-template-columns: repeat(4, minmax(0, 1fr));
-  gap: 28px;
+  gap: 24px;
 }
 
 .cineai-movieCard {
@@ -369,14 +475,15 @@ button {
   color: inherit;
   cursor: pointer;
   text-align: left;
+  transition: transform 0.2s ease;
 }
 
 .cineai-movieVisual {
   position: relative;
   aspect-ratio: 2 / 3;
-  border-radius: 24px;
+  border-radius: 20px;
   overflow: hidden;
-  margin-bottom: 16px;
+  margin-bottom: 12px;
 }
 
 .cineai-moviePoster {
@@ -387,7 +494,7 @@ button {
 }
 
 .cineai-movieCard:hover .cineai-moviePoster {
-  transform: scale(1.08);
+  transform: scale(1.06);
 }
 
 .cineai-moviePosterFallback {
@@ -396,29 +503,31 @@ button {
   height: 100%;
   background: #2a2a2c;
   color: #9a8f80;
+  font-size: 0.85rem;
 }
 
 .cineai-ratingBadge {
   position: absolute;
-  top: 18px;
-  right: 18px;
+  top: 12px;
+  right: 12px;
   display: flex;
   align-items: center;
-  gap: 6px;
-  padding: 7px 10px;
+  gap: 4px;
+  padding: 6px 10px;
   border-radius: 999px;
-  background: rgba(0, 0, 0, 0.58);
+  background: rgba(0, 0, 0, 0.62);
   backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
 }
 
 .cineai-ratingBadge .material-symbols-outlined {
   color: #e9c178;
   font-variation-settings: "FILL" 1, "wght" 500, "GRAD" 0, "opsz" 24;
-  font-size: 16px;
+  font-size: 14px;
 }
 
 .cineai-ratingBadge span:last-child {
-  font-size: 0.76rem;
+  font-size: 0.74rem;
   font-weight: 700;
 }
 
@@ -427,7 +536,7 @@ button {
   inset: 0;
   display: flex;
   align-items: flex-end;
-  padding: 18px;
+  padding: 14px;
   background: linear-gradient(180deg, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.82));
   opacity: 0;
   transition: opacity 0.3s ease;
@@ -443,64 +552,75 @@ button {
   align-items: center;
   justify-content: center;
   gap: 8px;
-  padding: 12px 14px;
-  border-radius: 14px;
+  padding: 10px 14px;
+  border-radius: 12px;
   background: #e9c178;
   color: #412d00;
   font-family: "Manrope", sans-serif;
   font-weight: 800;
+  font-size: 0.88rem;
 }
 
 .cineai-movieMeta h3 {
-  margin: 0 0 6px;
-  line-height: 1.2;
-  font-size: 1.08rem;
+  margin: 0 0 4px;
+  line-height: 1.25;
+  font-size: 0.98rem;
   font-weight: 800;
 }
 
 .cineai-movieMeta p {
   margin: 0;
   color: #9a8f80;
-  font-size: 0.9rem;
+  font-size: 0.82rem;
 }
 
+/* ============================================================
+   PAGINATION
+   ============================================================ */
 .cineai-pagination {
   display: flex;
   align-items: center;
   justify-content: center;
   gap: 16px;
   margin-top: 32px;
+  flex-wrap: wrap;
 }
 
 .cineai-paginationButton {
-  min-width: 120px;
+  min-width: 110px;
+  min-height: 48px;
   padding: 12px 18px;
   border-radius: 999px;
   background: #353437;
   color: #e9c178;
   cursor: pointer;
-  font-family: "Manrope", sans-serif;
   font-size: 0.76rem;
   font-weight: 800;
   letter-spacing: 0.14em;
   text-transform: uppercase;
+  transition: transform 0.2s ease, opacity 0.2s ease;
 }
 
 .cineai-pageIndicator {
   color: #d1c5b4;
+  font-size: 0.9rem;
 }
 
+/* ============================================================
+   LOAD MORE
+   ============================================================ */
 .cineai-loadMoreRow {
   display: flex;
   justify-content: center;
-  padding: 52px 0 0;
+  padding: 40px 0 0;
 }
 
 .cineai-loadMoreButton {
   display: flex;
   align-items: center;
   gap: 12px;
-  padding: 18px 28px;
+  padding: 16px 28px;
+  min-height: 52px;
   border-radius: 24px;
   background: #353437;
   color: #e4e2e4;
@@ -509,55 +629,245 @@ button {
   font-weight: 800;
   letter-spacing: 0.16em;
   text-transform: uppercase;
+  transition: transform 0.2s ease, opacity 0.2s ease;
 }
 
+/* ============================================================
+   MOBILE-SPECIFIC LAYOUT
+   ============================================================ */
+.cineai-mobileShell {
+  min-height: 100vh;
+  padding: 0 0 40px;
+}
+
+.cineai-mobileStack {
+  padding: 0 14px 0;
+}
+
+.cineai-mobileHero {
+  padding: 0 14px 18px;
+}
+
+.cineai-mobileTopbar {
+  position: static;
+  margin: 0 -14px 18px;
+}
+
+.cineai-mobileTopbarBadge,
+.cineai-mobileResultPill,
+.cineai-mobilePagePill {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 32px;
+  padding: 6px 12px;
+  border-radius: 999px;
+  background: rgba(233, 193, 120, 0.14);
+  color: #f3d8a2;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.cineai-mobileHeroCard,
+.cineai-mobilePanel,
+.cineai-mobileContent {
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  background:
+    linear-gradient(180deg, rgba(40, 31, 22, 0.9), rgba(20, 20, 23, 0.96)),
+    radial-gradient(circle at top right, rgba(233, 193, 120, 0.16), transparent 42%);
+  box-shadow: 0 22px 54px rgba(0, 0, 0, 0.28);
+}
+
+.cineai-mobileHeroCard {
+  padding: 22px 18px 18px;
+  border-radius: 28px;
+}
+
+.cineai-mobileEyebrow,
+.cineai-mobilePanelEyebrow {
+  display: inline-block;
+  color: #e9c178;
+  font-size: 0.72rem;
+  font-weight: 800;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+}
+
+.cineai-mobileTitle {
+  margin: 10px 0 10px;
+  font-size: clamp(2rem, 11vw, 3.4rem);
+}
+
+.cineai-mobileBlurb {
+  margin: 0 0 20px;
+  color: #d1c5b4;
+  line-height: 1.6;
+  font-size: 0.94rem;
+}
+
+.cineai-mobileControls,
+.cineai-mobileContent {
+  margin-top: 14px;
+}
+
+.cineai-mobilePanel,
+.cineai-mobileContent {
+  padding: 18px 16px;
+  border-radius: 24px;
+}
+
+.cineai-mobilePanelHeader,
+.cineai-mobileResultsHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 14px;
+}
+
+.cineai-mobilePanelTitle {
+  margin: 6px 0 0;
+  font-family: "Manrope", sans-serif;
+  font-size: 1.1rem;
+  font-weight: 800;
+}
+
+.cineai-mobileSortRow {
+  display: grid;
+  gap: 10px;
+}
+
+.cineai-chipGridMobile {
+  flex-wrap: wrap;
+  overflow: hidden;
+  max-height: 112px;
+  transition: max-height 0.28s ease;
+}
+
+.cineai-chipGridMobile.is-expanded {
+  max-height: 520px;
+}
+
+.cineai-mobileExpandButton {
+  width: 100%;
+  margin-top: 12px;
+  padding: 12px 14px;
+  min-height: 46px;
+  border-radius: 16px;
+  background: rgba(255, 255, 255, 0.05);
+  color: #f3d8a2;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  font-family: "Manrope", sans-serif;
+  font-size: 0.8rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  cursor: pointer;
+}
+
+.cineai-movieGridMobile {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+}
+
+.cineai-movieCardMobile {
+  padding: 0;
+}
+
+.cineai-footer {
+  max-width: 1440px;
+  margin: 0 auto;
+  padding: 18px 32px 36px;
+}
+
+.cineai-footerText {
+  margin: 0;
+  text-align: center;
+  font-family: "Manrope", sans-serif;
+  color: #d1c5b4;
+  font-size: 0.88rem;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+}
+
+.cineai-footerLink {
+  color: #e9c178;
+  text-decoration: none;
+}
+
+.cineai-footerLink:hover {
+  text-decoration: underline;
+}
+
+/* ============================================================
+   MODAL
+   ============================================================ */
 .cineai-modalOverlay {
   position: fixed;
   inset: 0;
   z-index: 1000;
   display: grid;
   place-items: center;
-  padding: 24px;
-  background: rgba(0, 0, 0, 0.6);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  animation: cineaiFadeIn 0.3s ease;
+  padding: 20px;
+  background: rgba(0, 0, 0, 0.65);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  animation: cineaiFadeIn 0.25s ease;
+  overflow-y: auto;
 }
 
 .cineai-modal {
   position: relative;
   display: grid;
-  grid-template-columns: minmax(220px, 320px) 1fr;
+  grid-template-columns: minmax(200px, 300px) 1fr;
   gap: 28px;
-  width: min(920px, 100%);
-  max-height: min(86vh, 760px);
-  overflow: auto;
+  width: min(880px, 100%);
+  max-height: min(88vh, 760px);
+  overflow-y: auto;
   padding: 28px;
   border-radius: 28px;
   border: 1px solid rgba(233, 193, 120, 0.18);
   background: linear-gradient(180deg, rgba(29, 23, 29, 0.98), rgba(13, 11, 15, 0.98));
-  box-shadow: 0 30px 90px rgba(0, 0, 0, 0.48);
-  animation: cineaiModalIn 0.3s ease;
+  box-shadow: 0 30px 90px rgba(0, 0, 0, 0.5);
+  animation: cineaiModalIn 0.25s ease;
 }
 
 .cineai-modalClose {
   position: absolute;
-  top: 18px;
-  right: 18px;
-  width: 42px;
-  height: 42px;
+  top: 14px;
+  right: 14px;
+  width: 44px;
+  height: 44px;
   border-radius: 999px;
-  background: rgba(255, 255, 255, 0.06);
+  background: rgba(255, 255, 255, 0.08);
   color: #f3e7c8;
   cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.2s;
+  z-index: 2;
+}
+
+.cineai-modalClose:hover {
+  background: rgba(255, 255, 255, 0.15);
+}
+
+.cineai-modalClose .material-symbols-outlined {
+  font-size: 20px;
 }
 
 .cineai-modalPoster {
   width: 100%;
-  min-height: 420px;
-  height: 100%;
+  height: auto;
+  min-height: 300px;
   object-fit: cover;
-  border-radius: 20px;
+  border-radius: 18px;
   background: #28222a;
 }
 
@@ -565,232 +875,54 @@ button {
   display: flex;
   flex-direction: column;
   justify-content: center;
+  padding-top: 8px;
 }
 
 .cineai-modalEyebrow {
-  margin-bottom: 12px;
+  margin-bottom: 10px;
   color: #e9c178;
   letter-spacing: 0.16em;
   text-transform: uppercase;
-  font-size: 0.8rem;
+  font-size: 0.76rem;
+  display: block;
 }
 
 .cineai-modalContent h2 {
-  margin: 0 0 14px;
+  margin: 0 0 12px;
   font-family: "Manrope", sans-serif;
-  font-size: clamp(2rem, 4vw, 3rem);
-  line-height: 1.05;
+  font-size: clamp(1.6rem, 3.5vw, 2.8rem);
+  line-height: 1.08;
 }
 
 .cineai-modalRating {
-  margin: 0 0 18px;
+  margin: 0 0 16px;
   color: #e9c178;
+  font-weight: 600;
 }
 
 .cineai-modalOverview {
   margin: 0;
-  line-height: 1.7;
+  line-height: 1.75;
   color: #e7dfd3;
+  font-size: 0.96rem;
 }
 
+/* ============================================================
+   ANIMATIONS
+   ============================================================ */
 @keyframes cineaiFadeIn {
-  from {
-    opacity: 0;
-  }
-  to {
-    opacity: 1;
-  }
+  from { opacity: 0; }
+  to { opacity: 1; }
 }
 
 @keyframes cineaiModalIn {
-  from {
-    opacity: 0;
-    transform: scale(0.94);
-  }
-  to {
-    opacity: 1;
-    transform: scale(1);
-  }
+  from { opacity: 0; transform: scale(0.94) translateY(12px); }
+  to { opacity: 1; transform: scale(1) translateY(0); }
 }
 
-@media (max-width: 1200px) {
-  .cineai-movieGrid {
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-  }
-}
-
-@media (min-width: 721px) {
-  .cineai-editorialPage {
-    padding: 0 20px 48px;
-  }
-
-  .cineai-searchBar {
-    flex-direction: row;
-    align-items: center;
-    gap: 12px;
-    padding: 8px;
-    border-radius: 24px;
-  }
-
-  .cineai-searchIcon {
-    margin-left: 14px;
-  }
-
-  .cineai-searchInput {
-    flex: 1;
-    min-width: 0;
-    width: auto;
-    padding: 16px 8px;
-    font-size: 1.05rem;
-  }
-
-  .cineai-searchButton {
-    width: auto;
-    padding: 16px 28px;
-  }
-
-  .cineai-sidebarPanel {
-    padding: 22px;
-  }
-
-  .cineai-sidebarNav {
-    flex-direction: row;
-    flex-wrap: wrap;
-    gap: 14px;
-    margin-bottom: 22px;
-  }
-
-  .cineai-sidebarLink {
-    flex: 1 1 160px;
-  }
-
-  .cineai-sortControl {
-    flex-direction: row;
-    align-items: center;
-    padding: 12px 14px;
-  }
-
-  .cineai-sortControl > .material-symbols-outlined {
-    align-self: center;
-  }
-
-  .cineai-sortButton {
-    padding: 10px 12px;
-    font-size: 0.76rem;
-  }
-
-  .cineai-chipGrid {
-    flex-wrap: wrap;
-    overflow-x: visible;
-    padding-bottom: 0;
-  }
-
-  .cineai-chip {
-    padding: 14px 22px;
-    font-size: 0.86rem;
-  }
-
-  .cineai-cardOverlay {
-    opacity: 0;
-    padding: 18px;
-    background: linear-gradient(180deg, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.82));
-  }
-
-  .cineai-trailerButton {
-    padding: 12px 14px;
-    font-size: 0.95rem;
-  }
-
-  .cineai-movieMeta h3 {
-    font-size: 1.08rem;
-  }
-
-  .cineai-movieMeta p {
-    font-size: 0.9rem;
-  }
-
-  .cineai-pagination {
-    flex-direction: row;
-    align-items: center;
-    gap: 16px;
-    margin-top: 32px;
-  }
-
-  .cineai-paginationButton {
-    width: auto;
-    min-width: 120px;
-    padding: 12px 18px;
-  }
-
-  .cineai-pageIndicator {
-    font-size: 0.98rem;
-  }
-
-  .cineai-loadMoreRow {
-    padding: 52px 0 0;
-  }
-
-  .cineai-loadMoreButton {
-    width: auto;
-    padding: 18px 28px;
-  }
-
-  .cineai-modalOverlay {
-    padding: 24px;
-  }
-
-  .cineai-modal {
-    grid-template-columns: minmax(220px, 320px) 1fr;
-    gap: 28px;
-    width: min(920px, 100%);
-    padding: 28px;
-    border-radius: 28px;
-  }
-
-  .cineai-modalPoster {
-    min-height: 420px;
-    border-radius: 20px;
-  }
-
-  .cineai-modalContent h2 {
-    font-size: clamp(2rem, 4vw, 3rem);
-  }
-}
-
-@media (min-width: 981px) {
-  .cineai-editorialPage {
-    padding: 0 32px 48px;
-  }
-
-  .cineai-editorialGrid {
-    grid-template-columns: 0.75fr 1.9fr;
-    gap: 34px;
-    margin-bottom: 32px;
-  }
-
-  .cineai-sidebarPanel {
-    position: sticky;
-    top: 104px;
-    padding: 32px;
-    border-radius: 24px;
-  }
-
-  .cineai-sidebarNav {
-    flex-direction: column;
-  }
-
-  .cineai-sidebarLink {
-    flex: 1 1 auto;
-    justify-content: flex-start;
-    padding: 14px 16px;
-  }
-
-  .cineai-movieGrid {
-    grid-template-columns: repeat(4, minmax(0, 1fr));
-    gap: 28px;
-  }
-}
-
+/* ============================================================
+   RESPONSIVE — TABLET (≤980px)
+   ============================================================ */
 @media (max-width: 980px) {
   .cineai-topbarInner,
   .cineai-editorialPage {
@@ -798,13 +930,14 @@ button {
     padding-right: 20px;
   }
 
+  .cineai-footer {
+    padding-left: 20px;
+    padding-right: 20px;
+  }
+
   .cineai-editorialGrid {
     grid-template-columns: 1fr;
     gap: 20px;
-  }
-
-  .cineai-sidebar {
-    display: block;
   }
 
   .cineai-sidebarPanel {
@@ -815,19 +948,24 @@ button {
   .cineai-sidebarNav {
     flex-direction: row;
     flex-wrap: wrap;
+    gap: 10px;
   }
 
   .cineai-sidebarLink {
-    flex: 1 1 160px;
+    flex: 1 1 140px;
     justify-content: center;
   }
 
-  .cineai-movieGrid {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
+  .cineai-movieGrid,
+  .cineai-loadingState {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
     gap: 20px;
   }
 }
 
+/* ============================================================
+   RESPONSIVE — MOBILE (≤720px)
+   ============================================================ */
 @media (max-width: 720px) {
   .cineai-topbarInner,
   .cineai-editorialPage {
@@ -835,20 +973,31 @@ button {
     padding-right: 14px;
   }
 
+  .cineai-footer {
+    padding: 16px 14px 28px;
+  }
+
+  .cineai-topbarInner {
+    padding-top: 14px;
+    padding-bottom: 14px;
+  }
+
   .cineai-hero {
     min-height: auto;
-    padding: 48px 0 28px;
+    padding: 40px 0 24px;
   }
 
   .cineai-heroTitle {
-    margin-bottom: 22px;
-    font-size: clamp(2.2rem, 12vw, 3.5rem);
+    margin-bottom: 20px;
+    font-size: clamp(2rem, 11vw, 3rem);
+    letter-spacing: -0.05em;
   }
 
+  /* Search wraps vertically on mobile */
   .cineai-searchBar {
     flex-wrap: wrap;
-    padding: 12px;
-    gap: 10px;
+    padding: 10px;
+    gap: 8px;
     border-radius: 20px;
   }
 
@@ -856,115 +1005,196 @@ button {
     margin-left: 4px;
   }
 
-  .cineai-searchButton {
-    width: 100%;
-    padding: 14px 18px;
-  }
-
   .cineai-searchInput {
     width: 100%;
-    padding: 14px 4px;
+    min-width: 0;
+    padding: 12px 4px;
     font-size: 1rem;
+    order: 2;
   }
 
+  .cineai-searchButton {
+    width: 100%;
+    order: 3;
+    border-radius: 14px;
+    padding: 14px;
+  }
+
+  /* Sidebar collapses cleanly */
   .cineai-sidebarPanel {
     padding: 16px;
-    border-radius: 20px;
+    border-radius: 18px;
   }
 
   .cineai-sidebarNav {
-    gap: 10px;
-    margin-bottom: 16px;
+    gap: 8px;
+    margin-bottom: 14px;
   }
 
   .cineai-sidebarLink {
     flex: 1 1 100%;
     padding: 12px 14px;
+    border-right: none !important;
   }
 
+  .cineai-sidebarLink.is-active {
+    border-right: none;
+    border-bottom: 2px solid #e9c178;
+  }
+
+  /* Sort horizontal on mobile */
   .cineai-sortControl {
-    flex-direction: column;
-    align-items: stretch;
-    padding: 14px;
-  }
-
-  .cineai-sortControl > .material-symbols-outlined {
-    align-self: flex-start;
-  }
-
-  .cineai-sortOptions {
-    width: 100%;
+    flex-direction: row;
+    align-items: center;
+    padding: 10px 12px;
+    gap: 8px;
   }
 
   .cineai-sortButton {
-    padding: 12px 10px;
+    min-height: 44px;
     font-size: 0.72rem;
   }
 
-  .cineai-movieGrid {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 14px;
-  }
-
-  .cineai-movieVisual {
-    border-radius: 20px;
-  }
-
-  .cineai-cardOverlay {
-    opacity: 1;
-    padding: 14px;
-    background: linear-gradient(180deg, rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.82));
-  }
-
-  .cineai-trailerButton {
-    padding: 10px 12px;
-    font-size: 0.82rem;
-  }
-
+  /* Chips: horizontally scrollable row */
   .cineai-chipGrid {
     flex-wrap: nowrap;
-    gap: 8px;
     overflow-x: auto;
-    padding-bottom: 6px;
+    gap: 8px;
+    padding-bottom: 8px;
+    /* Hide scrollbar */
     scrollbar-width: none;
+    -ms-overflow-style: none;
   }
 
   .cineai-chipGrid::-webkit-scrollbar {
     display: none;
   }
 
-  .cineai-chip {
-    width: auto;
-    flex: 0 0 auto;
-    text-align: center;
-    padding: 11px 14px;
-    font-size: 0.78rem;
-    white-space: nowrap;
+  .cineai-chipGridMobile {
+    flex-wrap: wrap;
+    overflow: hidden;
+    padding-bottom: 0;
+    max-height: 112px;
   }
 
-  .cineai-pagination {
-    flex-direction: column;
+  .cineai-chipGridMobile.is-expanded {
+    max-height: 520px;
+  }
+
+  .cineai-chip {
+    flex: 0 0 auto;
+    padding: 10px 16px;
+    font-size: 0.8rem;
+    min-height: 44px;
+  }
+
+  /* 2-column movie grid on mobile */
+  .cineai-movieGrid,
+  .cineai-loadingState {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
     gap: 12px;
   }
 
-  .cineai-paginationButton,
+  .cineai-movieVisual {
+    border-radius: 16px;
+  }
+
+  /* Always show overlay on mobile (no hover) */
+  .cineai-cardOverlay {
+    opacity: 1;
+    padding: 10px;
+    background: linear-gradient(180deg, transparent, rgba(0, 0, 0, 0.78));
+  }
+
+  .cineai-trailerButton {
+    padding: 8px 10px;
+    font-size: 0.78rem;
+  }
+
+  .cineai-movieMeta h3 {
+    font-size: 0.9rem;
+  }
+
+  .cineai-movieMeta p {
+    font-size: 0.76rem;
+  }
+
+  .cineai-sectionTitle {
+    font-size: 1.2rem;
+  }
+
+  /* Pagination stacks vertically */
+  .cineai-pagination {
+    flex-direction: column;
+    gap: 10px;
+    margin-top: 24px;
+  }
+
+  .cineai-paginationButton {
+    width: 100%;
+  }
+
+  .cineai-loadMoreRow {
+    padding-top: 24px;
+  }
+
   .cineai-loadMoreButton {
     width: 100%;
     justify-content: center;
   }
 
-  .cineai-loadMoreRow {
-    padding-top: 28px;
+  /* Modal: stacks vertically on mobile */
+  .cineai-modal {
+    grid-template-columns: 1fr;
+    gap: 18px;
+    padding: 20px;
+    border-radius: 22px;
+    max-height: 90dvh;
+    width: 100%;
   }
 
-  .cineai-topbarInner {
-    padding-top: 14px;
-    padding-bottom: 14px;
+  .cineai-modalPoster {
+    width: 100%;
+    max-height: 280px;
+    min-height: unset;
+    object-fit: cover;
+    border-radius: 14px;
+  }
+
+  .cineai-modalContent {
+    padding-top: 0;
+  }
+
+  .cineai-modalContent h2 {
+    font-size: clamp(1.4rem, 6vw, 2rem);
+    margin-bottom: 10px;
+  }
+
+  .cineai-modalOverview {
+    font-size: 0.9rem;
+  }
+
+  .cineai-loadingPulse {
+    border-radius: 16px;
   }
 }
 
+/* ============================================================
+   RESPONSIVE — SMALL PHONES (≤420px)
+   ============================================================ */
 @media (max-width: 420px) {
-  .cineai-movieGrid {
-    grid-template-columns: 1fr;
+  .cineai-movieGrid,
+  .cineai-loadingState {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 10px;
+  }
+
+  .cineai-heroTitle {
+    font-size: clamp(1.8rem, 10vw, 2.4rem);
+  }
+
+  .cineai-modal {
+    padding: 16px;
+    border-radius: 18px;
   }
 }

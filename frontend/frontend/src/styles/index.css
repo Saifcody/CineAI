@@ -1,0 +1,1011 @@
+body {
+  margin: 0;
+  font-family: "Inter", sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  background: #131315;
+  color: #e4e2e4;
+  position: relative;
+  overflow-x: hidden;
+}
+
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  opacity: 0.03;
+  background-image:
+    radial-gradient(circle, rgba(255, 255, 255, 0.9) 1px, transparent 1px),
+    radial-gradient(circle, rgba(255, 255, 255, 0.6) 1px, transparent 1px);
+  background-size: 18px 18px, 27px 27px;
+  background-position: 0 0, 11px 11px;
+}
+
+body > :not(#root) {
+  display: none !important;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+button,
+input {
+  font: inherit;
+}
+
+button {
+  border: 0;
+}
+
+#root {
+  min-height: 100vh;
+  position: relative;
+  z-index: 1;
+  overflow-x: hidden;
+}
+
+.material-symbols-outlined {
+  font-family: "Material Symbols Outlined";
+  font-weight: normal;
+  font-style: normal;
+  font-size: 24px;
+  display: inline-block;
+  line-height: 1;
+  white-space: nowrap;
+  -webkit-font-smoothing: antialiased;
+  font-variation-settings: "FILL" 0, "wght" 400, "GRAD" 0, "opsz" 24;
+}
+
+.cineai-editorialShell {
+  min-height: 100vh;
+  transition: filter 0.3s ease, transform 0.3s ease;
+}
+
+.cineai-editorialShell.is-blurred {
+  filter: blur(2px);
+  transform: scale(0.995);
+}
+
+.cineai-topbar {
+  position: sticky;
+  top: 0;
+  z-index: 40;
+  backdrop-filter: blur(24px);
+  background: rgba(10, 10, 10, 0.68);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+}
+
+.cineai-topbarInner {
+  max-width: 1440px;
+  margin: 0 auto;
+  padding: 20px 32px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 20px;
+}
+
+.cineai-brand,
+.cineai-heroTitle,
+.cineai-sectionTitle,
+.cineai-movieMeta h3,
+.cineai-sidebarTitle,
+.cineai-loadMoreButton,
+.cineai-searchButton,
+.cineai-chip {
+  font-family: "Manrope", sans-serif;
+}
+
+.cineai-brand {
+  font-size: 1.6rem;
+  font-weight: 800;
+  letter-spacing: -0.06em;
+  color: #e9c178;
+  text-transform: uppercase;
+}
+
+.cineai-editorialPage {
+  max-width: 1440px;
+  margin: 0 auto;
+  padding: 0 32px 48px;
+}
+
+.cineai-hero {
+  min-height: 420px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  padding: 84px 0 44px;
+  background: radial-gradient(circle at center, rgba(233, 193, 120, 0.08) 0%, rgba(19, 19, 21, 0) 70%);
+}
+
+.cineai-heroTitle {
+  margin: 0 0 32px;
+  max-width: 900px;
+  font-size: clamp(3rem, 8vw, 5.5rem);
+  line-height: 0.95;
+  font-weight: 800;
+  letter-spacing: -0.07em;
+}
+
+.cineai-heroTitle span {
+  color: #e9c178;
+  font-style: italic;
+}
+
+.cineai-searchShell {
+  width: 100%;
+  max-width: 900px;
+  position: relative;
+}
+
+.cineai-searchShell::before {
+  content: "";
+  position: absolute;
+  inset: -6px;
+  border-radius: 26px;
+  background: linear-gradient(90deg, rgba(233, 193, 120, 0.2), rgba(144, 210, 209, 0.18));
+  filter: blur(26px);
+  opacity: 0.55;
+}
+
+.cineai-searchBar {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 8px;
+  border-radius: 24px;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  background: rgba(53, 52, 55, 0.6);
+  backdrop-filter: blur(18px);
+}
+
+.cineai-searchIcon {
+  margin-left: 14px;
+  color: #9a8f80;
+}
+
+.cineai-searchInput {
+  flex: 1;
+  min-width: 0;
+  border: none;
+  outline: none;
+  background: transparent;
+  color: #e4e2e4;
+  font-size: 1.05rem;
+  padding: 16px 8px;
+}
+
+.cineai-searchInput::placeholder {
+  color: #9a8f80;
+}
+
+.cineai-searchButton {
+  padding: 16px 28px;
+  border-radius: 18px;
+  background: #e9c178;
+  color: #412d00;
+  font-weight: 800;
+  cursor: pointer;
+  transition: transform 0.3s ease, opacity 0.3s ease;
+}
+
+.cineai-searchButton:hover:not(:disabled),
+.cineai-chip:hover:not(:disabled),
+.cineai-paginationButton:hover:not(:disabled),
+.cineai-loadMoreButton:hover:not(:disabled),
+.cineai-movieCard:hover {
+  transform: translateY(-2px);
+}
+
+.cineai-searchButton:disabled,
+.cineai-chip:disabled,
+.cineai-paginationButton:disabled,
+.cineai-loadMoreButton:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+}
+
+.cineai-editorialGrid {
+  display: grid;
+  grid-template-columns: 0.75fr 1.9fr;
+  gap: 34px;
+  margin-bottom: 32px;
+}
+
+.cineai-sidebarPanel {
+  position: sticky;
+  top: 104px;
+  padding: 32px;
+  background: #1b1b1d;
+  border-radius: 24px;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.cineai-sidebarTitle {
+  margin: 0 0 28px;
+  font-size: 0.78rem;
+  color: #e9c178;
+  text-transform: uppercase;
+  letter-spacing: 0.22em;
+}
+
+.cineai-sidebarNav {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  margin-bottom: 22px;
+}
+
+.cineai-sidebarLink {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 14px 16px;
+  border-radius: 16px;
+  background: rgba(255, 255, 255, 0.04);
+  color: #d1c5b4;
+  cursor: pointer;
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  font-size: 0.68rem;
+  font-weight: 700;
+  min-width: 0;
+}
+
+.cineai-sidebarLink.is-active {
+  background: rgba(233, 193, 120, 0.14);
+  color: #e9c178;
+  border-right: 2px solid #e9c178;
+}
+
+.cineai-sidebarText {
+  display: inline-block;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.cineai-sortPanel {
+  padding-top: 20px;
+  border-top: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.cineai-sortLabel {
+  display: block;
+  margin-bottom: 10px;
+  color: #9a8f80;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+
+.cineai-sortControl {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 14px;
+  border-radius: 16px;
+  background: #2a2a2c;
+  color: #e9c178;
+}
+
+.cineai-sortOptions {
+  display: flex;
+  gap: 8px;
+  width: 100%;
+  min-width: 0;
+}
+
+.cineai-sortButton {
+  flex: 1;
+  padding: 10px 12px;
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.07);
+  color: #d1c5b4;
+  cursor: pointer;
+  font-family: "Manrope", sans-serif;
+  font-size: 0.76rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  transition: background 0.3s ease, color 0.3s ease, transform 0.3s ease;
+  min-width: 0;
+  text-align: center;
+}
+
+.cineai-sortButton.is-active {
+  background: #e9c178;
+  color: #412d00;
+}
+
+.cineai-sortButton:hover {
+  transform: translateY(-1px);
+}
+
+.cineai-genreSection {
+  margin-bottom: 28px;
+}
+
+.cineai-sectionTitle {
+  margin: 0 0 18px;
+  font-size: 1.7rem;
+  font-weight: 800;
+}
+
+.cineai-chipGrid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.cineai-chip {
+  padding: 14px 22px;
+  border-radius: 999px;
+  background: #2a2a2c;
+  color: #e4e2e4;
+  cursor: pointer;
+  font-size: 0.86rem;
+  font-weight: 800;
+}
+
+.cineai-chip.is-active {
+  background: #c6a15b;
+  color: #4f3800;
+}
+
+.cineai-error {
+  margin: 0 0 18px;
+  color: #ffb4ab;
+}
+
+.cineai-status {
+  margin: 0 0 18px;
+  color: #e9c178;
+}
+
+.cineai-movieGrid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 28px;
+}
+
+.cineai-movieCard {
+  background: transparent;
+  color: inherit;
+  cursor: pointer;
+  text-align: left;
+}
+
+.cineai-movieVisual {
+  position: relative;
+  aspect-ratio: 2 / 3;
+  border-radius: 24px;
+  overflow: hidden;
+  margin-bottom: 16px;
+}
+
+.cineai-moviePoster {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.5s ease;
+}
+
+.cineai-movieCard:hover .cineai-moviePoster {
+  transform: scale(1.08);
+}
+
+.cineai-moviePosterFallback {
+  display: grid;
+  place-items: center;
+  height: 100%;
+  background: #2a2a2c;
+  color: #9a8f80;
+}
+
+.cineai-ratingBadge {
+  position: absolute;
+  top: 18px;
+  right: 18px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 7px 10px;
+  border-radius: 999px;
+  background: rgba(0, 0, 0, 0.58);
+  backdrop-filter: blur(16px);
+}
+
+.cineai-ratingBadge .material-symbols-outlined {
+  color: #e9c178;
+  font-variation-settings: "FILL" 1, "wght" 500, "GRAD" 0, "opsz" 24;
+  font-size: 16px;
+}
+
+.cineai-ratingBadge span:last-child {
+  font-size: 0.76rem;
+  font-weight: 700;
+}
+
+.cineai-cardOverlay {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: flex-end;
+  padding: 18px;
+  background: linear-gradient(180deg, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.82));
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.cineai-movieCard:hover .cineai-cardOverlay {
+  opacity: 1;
+}
+
+.cineai-trailerButton {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 12px 14px;
+  border-radius: 14px;
+  background: #e9c178;
+  color: #412d00;
+  font-family: "Manrope", sans-serif;
+  font-weight: 800;
+}
+
+.cineai-movieMeta h3 {
+  margin: 0 0 6px;
+  line-height: 1.2;
+  font-size: 1.08rem;
+  font-weight: 800;
+}
+
+.cineai-movieMeta p {
+  margin: 0;
+  color: #9a8f80;
+  font-size: 0.9rem;
+}
+
+.cineai-pagination {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  margin-top: 32px;
+}
+
+.cineai-paginationButton {
+  min-width: 120px;
+  padding: 12px 18px;
+  border-radius: 999px;
+  background: #353437;
+  color: #e9c178;
+  cursor: pointer;
+  font-family: "Manrope", sans-serif;
+  font-size: 0.76rem;
+  font-weight: 800;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.cineai-pageIndicator {
+  color: #d1c5b4;
+}
+
+.cineai-loadMoreRow {
+  display: flex;
+  justify-content: center;
+  padding: 52px 0 0;
+}
+
+.cineai-loadMoreButton {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 18px 28px;
+  border-radius: 24px;
+  background: #353437;
+  color: #e4e2e4;
+  cursor: pointer;
+  font-size: 0.76rem;
+  font-weight: 800;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+
+.cineai-modalOverlay {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  display: grid;
+  place-items: center;
+  padding: 24px;
+  background: rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  animation: cineaiFadeIn 0.3s ease;
+}
+
+.cineai-modal {
+  position: relative;
+  display: grid;
+  grid-template-columns: minmax(220px, 320px) 1fr;
+  gap: 28px;
+  width: min(920px, 100%);
+  max-height: min(86vh, 760px);
+  overflow: auto;
+  padding: 28px;
+  border-radius: 28px;
+  border: 1px solid rgba(233, 193, 120, 0.18);
+  background: linear-gradient(180deg, rgba(29, 23, 29, 0.98), rgba(13, 11, 15, 0.98));
+  box-shadow: 0 30px 90px rgba(0, 0, 0, 0.48);
+  animation: cineaiModalIn 0.3s ease;
+}
+
+.cineai-modalClose {
+  position: absolute;
+  top: 18px;
+  right: 18px;
+  width: 42px;
+  height: 42px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.06);
+  color: #f3e7c8;
+  cursor: pointer;
+}
+
+.cineai-modalPoster {
+  width: 100%;
+  min-height: 420px;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 20px;
+  background: #28222a;
+}
+
+.cineai-modalContent {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.cineai-modalEyebrow {
+  margin-bottom: 12px;
+  color: #e9c178;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  font-size: 0.8rem;
+}
+
+.cineai-modalContent h2 {
+  margin: 0 0 14px;
+  font-family: "Manrope", sans-serif;
+  font-size: clamp(2rem, 4vw, 3rem);
+  line-height: 1.05;
+}
+
+.cineai-modalRating {
+  margin: 0 0 18px;
+  color: #e9c178;
+}
+
+.cineai-modalOverview {
+  margin: 0;
+  line-height: 1.7;
+  color: #e7dfd3;
+}
+
+@keyframes cineaiFadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes cineaiModalIn {
+  from {
+    opacity: 0;
+    transform: scale(0.94);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@media (max-width: 1200px) {
+  .cineai-movieGrid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+@media (min-width: 721px) {
+  .cineai-editorialPage {
+    padding: 0 20px 48px;
+  }
+
+  .cineai-searchBar {
+    flex-direction: row;
+    align-items: center;
+    gap: 12px;
+    padding: 8px;
+    border-radius: 24px;
+  }
+
+  .cineai-searchIcon {
+    margin-left: 14px;
+  }
+
+  .cineai-searchInput {
+    flex: 1;
+    min-width: 0;
+    width: auto;
+    padding: 16px 8px;
+    font-size: 1.05rem;
+  }
+
+  .cineai-searchButton {
+    width: auto;
+    padding: 16px 28px;
+  }
+
+  .cineai-sidebarPanel {
+    padding: 22px;
+  }
+
+  .cineai-sidebarNav {
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 14px;
+    margin-bottom: 22px;
+  }
+
+  .cineai-sidebarLink {
+    flex: 1 1 160px;
+  }
+
+  .cineai-sortControl {
+    flex-direction: row;
+    align-items: center;
+    padding: 12px 14px;
+  }
+
+  .cineai-sortControl > .material-symbols-outlined {
+    align-self: center;
+  }
+
+  .cineai-sortButton {
+    padding: 10px 12px;
+    font-size: 0.76rem;
+  }
+
+  .cineai-chipGrid {
+    flex-wrap: wrap;
+    overflow-x: visible;
+    padding-bottom: 0;
+  }
+
+  .cineai-chip {
+    padding: 14px 22px;
+    font-size: 0.86rem;
+  }
+
+  .cineai-cardOverlay {
+    opacity: 0;
+    padding: 18px;
+    background: linear-gradient(180deg, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.82));
+  }
+
+  .cineai-trailerButton {
+    padding: 12px 14px;
+    font-size: 0.95rem;
+  }
+
+  .cineai-movieMeta h3 {
+    font-size: 1.08rem;
+  }
+
+  .cineai-movieMeta p {
+    font-size: 0.9rem;
+  }
+
+  .cineai-pagination {
+    flex-direction: row;
+    align-items: center;
+    gap: 16px;
+    margin-top: 32px;
+  }
+
+  .cineai-paginationButton {
+    width: auto;
+    min-width: 120px;
+    padding: 12px 18px;
+  }
+
+  .cineai-pageIndicator {
+    font-size: 0.98rem;
+  }
+
+  .cineai-loadMoreRow {
+    padding: 52px 0 0;
+  }
+
+  .cineai-loadMoreButton {
+    width: auto;
+    padding: 18px 28px;
+  }
+
+  .cineai-modalOverlay {
+    padding: 24px;
+  }
+
+  .cineai-modal {
+    grid-template-columns: minmax(220px, 320px) 1fr;
+    gap: 28px;
+    width: min(920px, 100%);
+    padding: 28px;
+    border-radius: 28px;
+  }
+
+  .cineai-modalPoster {
+    min-height: 420px;
+    border-radius: 20px;
+  }
+
+  .cineai-modalContent h2 {
+    font-size: clamp(2rem, 4vw, 3rem);
+  }
+}
+
+@media (min-width: 981px) {
+  .cineai-editorialPage {
+    padding: 0 32px 48px;
+  }
+
+  .cineai-editorialGrid {
+    grid-template-columns: 0.75fr 1.9fr;
+    gap: 34px;
+    margin-bottom: 32px;
+  }
+
+  .cineai-sidebarPanel {
+    position: sticky;
+    top: 104px;
+    padding: 32px;
+    border-radius: 24px;
+  }
+
+  .cineai-sidebarNav {
+    flex-direction: column;
+  }
+
+  .cineai-sidebarLink {
+    flex: 1 1 auto;
+    justify-content: flex-start;
+    padding: 14px 16px;
+  }
+
+  .cineai-movieGrid {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 28px;
+  }
+}
+
+@media (max-width: 980px) {
+  .cineai-topbarInner,
+  .cineai-editorialPage {
+    padding-left: 20px;
+    padding-right: 20px;
+  }
+
+  .cineai-editorialGrid {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+
+  .cineai-sidebar {
+    display: block;
+  }
+
+  .cineai-sidebarPanel {
+    position: static;
+    padding: 22px;
+  }
+
+  .cineai-sidebarNav {
+    flex-direction: row;
+    flex-wrap: wrap;
+  }
+
+  .cineai-sidebarLink {
+    flex: 1 1 160px;
+    justify-content: center;
+  }
+
+  .cineai-movieGrid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 20px;
+  }
+}
+
+@media (max-width: 720px) {
+  .cineai-topbarInner,
+  .cineai-editorialPage {
+    padding-left: 14px;
+    padding-right: 14px;
+  }
+
+  .cineai-hero {
+    min-height: auto;
+    padding: 48px 0 28px;
+  }
+
+  .cineai-heroTitle {
+    margin-bottom: 22px;
+    font-size: clamp(2.2rem, 12vw, 3.5rem);
+  }
+
+  .cineai-searchBar {
+    flex-wrap: wrap;
+    padding: 12px;
+    gap: 10px;
+    border-radius: 20px;
+  }
+
+  .cineai-searchIcon {
+    margin-left: 4px;
+  }
+
+  .cineai-searchButton {
+    width: 100%;
+    padding: 14px 18px;
+  }
+
+  .cineai-searchInput {
+    width: 100%;
+    padding: 14px 4px;
+    font-size: 1rem;
+  }
+
+  .cineai-sidebarPanel {
+    padding: 16px;
+    border-radius: 20px;
+  }
+
+  .cineai-sidebarNav {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 10px;
+    margin-bottom: 16px;
+  }
+
+  .cineai-sidebarLink {
+    flex: 0 0 auto;
+    padding: 12px 14px;
+    justify-content: center;
+    text-align: center;
+    background: #2a2a2c;
+    color: #f3e7c8;
+    border: 1px solid rgba(233, 193, 120, 0.08);
+  }
+
+  .cineai-sortControl {
+    flex-direction: column;
+    align-items: stretch;
+    padding: 14px;
+  }
+
+  .cineai-sortControl > .material-symbols-outlined {
+    align-self: flex-start;
+  }
+
+  .cineai-sortOptions {
+    width: 100%;
+    flex-direction: column;
+  }
+
+  .cineai-sortButton {
+    width: 100%;
+    padding: 12px 10px;
+    font-size: 0.72rem;
+    background: #353437;
+    color: #f3e7c8;
+    border: 1px solid rgba(233, 193, 120, 0.08);
+  }
+
+  .cineai-sortButton.is-active {
+    background: #e9c178;
+    color: #412d00;
+  }
+
+  .cineai-sidebarLink .material-symbols-outlined,
+  .cineai-sidebarText,
+  .cineai-sortButton {
+    opacity: 1;
+  }
+
+  .cineai-movieGrid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 14px;
+  }
+
+  .cineai-movieVisual {
+    border-radius: 20px;
+  }
+
+  .cineai-cardOverlay {
+    opacity: 1;
+    padding: 14px;
+    background: linear-gradient(180deg, rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.82));
+  }
+
+  .cineai-trailerButton {
+    padding: 10px 12px;
+    font-size: 0.82rem;
+  }
+
+  .cineai-chipGrid {
+    flex-wrap: nowrap;
+    gap: 8px;
+    overflow-x: auto;
+    padding-bottom: 6px;
+    scrollbar-width: none;
+  }
+
+  .cineai-chipGrid::-webkit-scrollbar {
+    display: none;
+  }
+
+  .cineai-chip {
+    width: auto;
+    flex: 0 0 auto;
+    text-align: center;
+    padding: 11px 14px;
+    font-size: 0.78rem;
+    white-space: nowrap;
+  }
+
+  .cineai-pagination {
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .cineai-paginationButton,
+  .cineai-loadMoreButton {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .cineai-loadMoreRow {
+    padding-top: 28px;
+  }
+
+  .cineai-topbarInner {
+    padding-top: 14px;
+    padding-bottom: 14px;
+  }
+}
+
+@media (max-width: 420px) {
+  .cineai-sidebarNav {
+    grid-template-columns: 1fr;
+  }
+
+  .cineai-movieGrid {
+    grid-template-columns: 1fr;
+  }
+}

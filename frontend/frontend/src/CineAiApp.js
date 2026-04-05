@@ -1,5 +1,7 @@
 import { useEffect, useState } from "react";
 
+const BASE_URL = process.env.REACT_APP_API_URL || "http://127.0.0.1:8001";
+
 const categories = [
   "Action",
   "Adventure",
@@ -54,7 +56,7 @@ export default function CineAiApp() {
 
     try {
       const res = await fetch(
-        `http://127.0.0.1:8000/recommend?query=${encodeURIComponent(searchQuery)}&page=${page}`
+        `${BASE_URL}/recommend?query=${encodeURIComponent(searchQuery)}&page=${page}`
       );
       const data = await res.json();
 

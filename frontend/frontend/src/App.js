@@ -1,11 +1,13 @@
 import { useState } from "react";
 
+const BASE_URL = process.env.REACT_APP_API_URL || "http://127.0.0.1:8001";
+
 function App() {
   const [query, setQuery] = useState("");
   const [movies, setMovies] = useState([]);
 
   const search = async () => {
-    const res = await fetch(`http://127.0.0.1:8000/recommend?query=${query}`);
+    const res = await fetch(`${BASE_URL}/recommend?query=${encodeURIComponent(query)}`);
     const data = await res.json();
     setMovies(data);
   };
