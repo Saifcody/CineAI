@@ -1,31 +1,21 @@
-// 🔥 DIRECT BACKEND URL (NO ENV CONFUSION)
 const BASE_URL = "https://cineai-backend-08x8.onrender.com";
 
-// 🎬 Fetch movies
 export async function fetchMovies(query, page = 1) {
   try {
-    console.log("Calling API:", BASE_URL);
-
-    const response = await fetch(
+    const res = await fetch(
       `${BASE_URL}/recommend?query=${encodeURIComponent(query)}&page=${page}`
     );
 
-    // Debug status
-    console.log("Response status:", response.status);
+    const data = await res.json();
 
-    // Convert response
-    const data = await response.json();
-
-    // Handle backend error
-    if (!response.ok) {
-      console.error("Backend error:", data);
-      throw new Error(data.error || "Failed to fetch movies");
+    if (!res.ok) {
+      throw new Error(data.error || "Failed to fetch");
     }
 
     return data;
 
-  } catch (error) {
-    console.error("Fetch failed:", error);
-    throw new Error("Failed to fetch");
+  } catch (err) {
+    console.error("Fetch failed:", err);
+    throw err;
   }
 }
