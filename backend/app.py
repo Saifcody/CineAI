@@ -1,53 +1,43 @@
-from fastapi import FastAPI, HTTPException
+from fastapi import FastAPI, Query
 from fastapi.middleware.cors import CORSMiddleware
-
-from .tmdb import TMDBError, discover_movies_by_genre, get_popular_movies, search_movie
-from .utils import GENRE_IDS, parse_query
+from backend.tmdb import search_movie, get_popular_movies
 
 app = FastAPI()
 
+# ✅ CORS (VERY IMPORTANT FOR FRONTEND)
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://localhost:3000", "http://127.0.0.1:3000"],
-    allow_credentials=True,
+    allow_origins=["*"],  # 🔥 allow all (later secure)
+    allow_credentials=False,  # important for wildcard
     allow_methods=["*"],
     allow_headers=["*"],
 )
 
+# ✅ Health check (important for Render)
 @app.get("/")
-def home():
-    return {"message": "CineAI Backend Running 🚀"}
+def root():
+    return {"status": "CineAI backend running 🚀"}
 
+
+# ✅ Main recommendation endpoint
 @app.get("/recommend")
-def recommend(query: str, page: int = 1):
-    page = max(page, 1)
-    query_type, value = parse_query(query)
-
+def recommend(query: str = Query(default=""), page: int = 1):
     try:
-        if query_type == "popular":
-            data = get_popular_movies(page)
-        elif query_type == "genre":
-            data = discover_movies_by_genre(GENRE_IDS[value], page)
+        if query.strip():
+            data = search_movie(query, page)
         else:
-            data = search_movie(value, page)
-    except TMDBError as exc:
-        raise HTTPException(status_code=503, detail=str(exc)) from exc
+            data = get_popular_movies(page)
 
-    results = []
+        return {
+            "page": data.get("page", 1),
+            "total_pages": data.get("total_pages", 1),
+            "results": data.get("results", []),
+        }
 
-    for movie in data.get("results", [])[:10]:
-        poster_path = movie.get("poster_path")
-        results.append({
-            "title": movie.get("title"),
-            "vote_average": movie.get("vote_average"),
-            "rating": movie.get("vote_average"),
-            "overview": movie.get("overview"),
-            "poster_path": poster_path,
-            "poster": f"https://image.tmdb.org/t/p/w500{poster_path}" if poster_path else None
-        })
-
-    return {
-        "page": data.get("page", page),
-        "total_pages": data.get("total_pages", 1),
-        "results": results,
-    }
+    except Exception as e:
+        return {
+            "page": 1,
+            "total_pages": 1,
+            "results": [],
+            "error": str(e),
+        }
