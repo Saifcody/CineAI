@@ -4,23 +4,26 @@ from backend.tmdb import search_movie, get_popular_movies
 
 app = FastAPI()
 
-# ✅ CORS (VERY IMPORTANT)
+# ✅ CORS (VERY IMPORTANT FOR FRONTEND)
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],  # later restrict
-    allow_credentials=True,
+    allow_origins=["*"],  # 🔥 allow all (later secure)
+    allow_credentials=False,  # important for wildcard
     allow_methods=["*"],
     allow_headers=["*"],
 )
 
+# ✅ Health check (important for Render)
 @app.get("/")
 def root():
-    return {"message": "CineAI Backend Running 🚀"}
+    return {"status": "CineAI backend running 🚀"}
 
+
+# ✅ Main recommendation endpoint
 @app.get("/recommend")
 def recommend(query: str = Query(default=""), page: int = 1):
     try:
-        if query:
+        if query.strip():
             data = search_movie(query, page)
         else:
             data = get_popular_movies(page)
@@ -32,4 +35,9 @@ def recommend(query: str = Query(default=""), page: int = 1):
         }
 
     except Exception as e:
-        return {"error": str(e)}
+        return {
+            "page": 1,
+            "total_pages": 1,
+            "results": [],
+            "error": str(e),
+        }
